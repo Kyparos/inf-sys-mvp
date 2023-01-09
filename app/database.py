@@ -1,41 +1,52 @@
-import time
-import random
+from sqlalchemy import create_engine, text
 
-from sqlalchemy import create_engine
 
-db_name = 'database'
-db_user = 'username'
-db_pass = 'secret'
-db_host = 'db'
-db_port = '5432'
+class DataBase:
+    def __init__(self,
+                 db_name='postgres',
+                 db_user='postgres',
+                 db_pass='postgres',
+                 db_host='db',
+                 db_port='5444'):
+        db_string = 'postgresql://{}:{}@{}:{}/{}'.format(db_user, db_pass, db_host, db_port, db_name)
+        self.engine = create_engine(db_string)
 
-# Connecto to the database
-db_string = 'postgresql://{}:{}@{}:{}/{}'.format(db_user, db_pass, db_host, db_port, db_name)
-db = create_engine(db_string)
+    def query(self, query_text):
+        with self.engine.begin() as conn:
+            return conn.execute(text(query_text))
 
-def add_new_row(n):
-    # Insert a new number into the 'numbers' table.
-    db.execute("INSERT INTO numbers (number,timestamp) "+\
-        "VALUES ("+\
-        str(n) + "," + \
-        str(int(round(time.time() * 1000))) + ");")
+    def insert_user(self,
+                    name='NULL',
+                    nickname='NULL',
+                    age='NULL',
+                    sex='NULL',
+                    cp='NULL',
+                    trtbps='NULL',
+                    chol='NULL',
+                    fbs='NULL',
+                    restecg='NULL',
+                    thalachh='NULL',
+                    exng='NULL',
+                    oldpeak='NULL',
+                    slp='NULL',
+                    caa='NULL'):
+        query = text(f"""
+        WITH req_1 AS (
+            INSERT INTO users(name, nickname, age, sex)
+            VALUES ({name}, {nickname}, {age}, {sex})
+            RETURNING users.id AS user_id
+        )
+        INSERT INTO heart_attack(user_id, cp, trtbps, chol, fbs, restecg, thalachh, exng, oldpeak, slp, caa)
+        SELECT req_1.user_id, {cp} ,{trtbps}, {chol}, {fbs}, {restecg}, {thalachh}, {exng}, {oldpeak}, {slp}, {caa}
+        FROM req_1
+        ;
+        """)
+        with self.engine.begin() as conn:
+            conn.execute(query)
 
-def get_last_row():
-    # Retrieve the last number inserted inside the 'numbers'
-    query = "" + \
-            "SELECT number " + \
-            "FROM numbers " + \
-            "WHERE timestamp >= (SELECT max(timestamp) FROM numbers)" +\
-            "LIMIT 1"
-
-    result_set = db.execute(query)
-    for (r) in result_set:
-        return r[0]
 
 if __name__ == '__main__':
-    print('Application started')
+    data_base = DataBase(db_host='localhost')
+    data_base.insert_user(name="'Sasha'")
+    print(data_base.query('SELECT * FROM users  u INNER JOIN heart_attack h ON u.id = h.user_id').all())
 
-    while True:
-        add_new_row(random.randint(1,100000))
-        print('The last value insterted is: {}'.format(get_last_row()))
-        time.sleep(5)

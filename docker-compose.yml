@@ -2,5 +2,10 @@ version: "3.8"
 services:
   app :
     build: ./app/
+    depends_on:
+      db:
+        condition: service_started
   db:
+    ports:
+      - 5444:5432
     build: ./db/
