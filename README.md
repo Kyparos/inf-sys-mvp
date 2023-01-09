@@ -15,4 +15,4 @@
     - Value 1: having ST-T wave abnormality (T wave inversions and/or ST elevation or depression of > 0.05 mV)
     - Value 2: showing probable or definite left ventricular hypertrophy by Estes' criteria
 10. thalach : maximum heart rate achieved
-11 .target : 0= less chance of heart attack 1= more chance of heart attack
+11. target : 0= less chance of heart attack 1= more chance of heart attack
