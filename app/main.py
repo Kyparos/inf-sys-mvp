@@ -141,10 +141,30 @@ async def chol_message(message: types.Message):
         text=f'Ваш рівень холестерину: {chol}'
     )
 
-
+    await bot.send_message(
+        chat_id=user.id,
+        text='Чи ваш рівень цукру більший за 120?\n'
+             '1 - так\n'
+             '0 - ні'
+    )
 
     data_list.append(chol)
     print(data_list)
+
+@dp.message_handler(content_types=['text'], state=[BotStates.cp_menu])
+async def fbs_message(message: types.Message):
+    user = message.from_user
+
+    fbs = int(message.text)
+
+    await bot.send_message(
+        chat_id=user.id,
+        text=f'Ваша відповідь: {fbs}'
+    )
+
+    data_list.append(fbs)
+    print(data_list)
+
 
 @dp.message_handler(Text("Прочитати інструкцію"))
 async def instruction_reply(message: types.Message):
