@@ -209,10 +209,10 @@ async def fbs_message(message: types.Message):
     data_list.append(restecg)
     print(data_list)
 
-    await BotStates.fbs_menu.set()
+    await BotStates.thalachh_menu
 
 
-@dp.message_handler(content_types=['text'], state=[BotStates.restecg_menu])
+@dp.message_handler(content_types=['text'], state=[BotStates.thalachh_menu])
 async def fbs_message(message: types.Message):
     user = message.from_user
 

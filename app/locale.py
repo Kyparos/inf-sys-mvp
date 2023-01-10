@@ -38,6 +38,26 @@ class RestecgMenu:
 class ThalachhMenu:
     DONTKNOW = '-1'
 
+
+class ExngMenu:
+    DONTKNOW = '-1'
+
+
+class OldpeakMenu:
+    DONTKNOW = '-1'
+
+
+class SlpMenu:
+    DONTKNOW = '-1'
+
+
+class CaaMenu:
+    DONTKNOW = '-1'
+
+
+class ThallMenu:
+    DONTKNOW = '-1'
+
 # class HideMenu:
 #    HIDE_KEYBOARD = ''
 ## class DataMenu:

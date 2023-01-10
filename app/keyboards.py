@@ -64,6 +64,37 @@ class Keyboards:
         ]
     )
 
+    ExngMenu = ReplyKeyboardMarkup(
+        [
+
+        ]
+    )
+
+    OldpeakMenu = ReplyKeyboardMarkup(
+        [
+
+        ]
+    )
+
+    SlpMenu = ReplyKeyboardMarkup(
+        [
+
+        ]
+    )
+
+    CaaMenu = ReplyKeyboardMarkup(
+        [
+
+        ]
+    )
+
+    ThallMenu = ReplyKeyboardMarkup(
+        [
+
+        ]
+    )
+
+
     #HideMenu = ReplyKeyboardMarkup(
     #    [
     #        [KeyboardButton(locale.HideMenu.HIDE_KEYBOARD)]
