@@ -30,6 +30,34 @@ class Keyboards:
         resize_keyboard=True
     )
 
+    FbsMenu = ReplyKeyboardMarkup(
+        [
+            [KeyboardButton(locale.FbsMenu.MORE120)],
+            [KeyboardButton(locale.FbsMenu.LESS120)]
+        ]
+    )
+
+    TrtbpsMenu = ReplyKeyboardMarkup(
+        [
+            [KeyboardButton(locale.TrtbpsMenu.DONTKNOW)]
+        ]
+    )
+
+    CholMenu = ReplyKeyboardMarkup(
+        [
+            [KeyboardButton(locale.CholMenu.DONTKNOW)]
+        ]
+    )
+
+    Restecg = ReplyKeyboardMarkup(
+        [
+            [KeyboardButton(locale.]
+            [KeyboardButton(locale.]
+            [KeyboardButton(locale.]
+
+        ]
+    )
+
     #HideMenu = ReplyKeyboardMarkup(
     #    [
     #        [KeyboardButton(locale.HideMenu.HIDE_KEYBOARD)]

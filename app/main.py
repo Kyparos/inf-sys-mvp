@@ -37,10 +37,10 @@ async def interest_reply(message: types.Message):
     await bot.send_message(
         chat_id=user.id,
         text='Надішліть свій вік'
-        #reply_markup=Keyboards.HideMenu
+        # reply_markup=Keyboards.HideMenu
     )
 
-    #await BotStates.hide_menu.set()
+    # await BotStates.hide_menu.set()
 
 
 @dp.message_handler(content_types=['text'], state=[BotStates.main_menu])
@@ -103,14 +103,18 @@ async def cp_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text='Напишіть свій кровяний тиск'
+        text='Напишіть свій кровяний тиск',
+        reply_markup=Keyboards.TrtbpsMenu
     )
+
+    await BotStates.trtbps_menu.set()
 
     data_list.append(cp)
     print(data_list)
 
 
-@dp.message_handler(content_types=['text'], state=[BotStates.cp_menu])
+
+@dp.message_handler(content_types=['text'], state=[BotStates.trtbps_menu])
 async def trtbps_message(message: types.Message):
     user = message.from_user
 
@@ -123,14 +127,17 @@ async def trtbps_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text=f'Напишіть ваш рівень холестерину'
+        text=f'Напишіть ваш рівень холестерину',
+        reply_markup=Keyboards.CholMenu
     )
+
+    await BotStates.chol_menu.set()
 
     data_list.append(trtbps)
     print(data_list)
 
 
-@dp.message_handler(content_types=['text'], state=[BotStates.cp_menu])
+@dp.message_handler(content_types=['text'], state=[BotStates.chol_menu])
 async def chol_message(message: types.Message):
     user = message.from_user
 
@@ -145,13 +152,17 @@ async def chol_message(message: types.Message):
         chat_id=user.id,
         text='Чи ваш рівень цукру більший за 120?\n'
              '1 - так\n'
-             '0 - ні'
+             '0 - ні',
+        reply_markup=Keyboards.FbsMenu
     )
 
     data_list.append(chol)
     print(data_list)
 
-@dp.message_handler(content_types=['text'], state=[BotStates.cp_menu])
+    await BotStates.fbs_menu.set()
+
+
+@dp.message_handler(content_types=['text'], state=[BotStates.fbs_menu])
 async def fbs_message(message: types.Message):
     user = message.from_user
 
@@ -159,7 +170,16 @@ async def fbs_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text=f'Ваша відповідь: {fbs}'
+        text=f'Ваша відповідь: {fbs}',
+        reply_markup=Keyboards.FbsMenu
+    )
+
+    await bot.send_message(
+        chat_id=user.id,
+        text='Оберіть ваш тип кардіограми:\n'
+             '0 - \n'
+             '1 - \n'
+             '2 - '
     )
 
     data_list.append(fbs)
