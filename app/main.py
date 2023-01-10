@@ -301,8 +301,8 @@ async def caa_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text='нахил піку навантаження сегмент ST — 0: спадний;\n'
-             ' 1: плоский; 2: висхідний ',
+        text='number of major vessels\n'
+             '0: , 1: , 2: , 3: .',
         reply_markup=Keyboards.SlpMenu
     )
 
