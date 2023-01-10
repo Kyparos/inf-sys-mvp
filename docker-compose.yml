@@ -1,6 +1,8 @@
 version: "3.8"
 services:
   app :
+    ports:
+      - 8081:8081
     build: ./app/
     depends_on:
       db:
