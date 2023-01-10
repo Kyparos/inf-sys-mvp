@@ -5,3 +5,4 @@ class BotStates(StatesGroup):
     main_menu = State()
     gender_menu = State()
     cp_menu = State()
+    #hide_menu = State()

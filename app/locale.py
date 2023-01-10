@@ -15,6 +15,6 @@ class CpMenu:
     PAIN4 = '4'
 
 
-class HideMenu:
-    HIDE_KEYBOARD = ''
-# class DataMenu:
+#class HideMenu:
+#    HIDE_KEYBOARD = ''
+## class DataMenu:

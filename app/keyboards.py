@@ -30,12 +30,12 @@ class Keyboards:
         resize_keyboard=True
     )
 
-    HideMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale.HideMenu.HIDE_KEYBOARD)]
-        ],
-        resize_keyboard=True
-    )
+    #HideMenu = ReplyKeyboardMarkup(
+    #    [
+    #        [KeyboardButton(locale.HideMenu.HIDE_KEYBOARD)]
+    #    ],
+    #    resize_keyboard=True
+    #)
 
     #Data1 = ReplyKeyboardMarkup(
     #    [KeyboardButton()]

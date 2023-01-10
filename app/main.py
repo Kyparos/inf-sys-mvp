@@ -36,9 +36,11 @@ async def interest_reply(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text='Надішліть свій вік',
-        reply_markup=Keyboards.HideMenu
+        text='Надішліть свій вік'
+        #reply_markup=Keyboards.HideMenu
     )
+
+    #await BotStates.hide_menu.set()
 
 
 @dp.message_handler(content_types=['text'], state=[BotStates.main_menu])
@@ -99,13 +101,50 @@ async def cp_message(message: types.Message):
         text=f'У вас {cp} вид болю'
     )
 
+    await bot.send_message(
+        chat_id=user.id,
+        text='Напишіть свій кровяний тиск'
+    )
+
     data_list.append(cp)
     print(data_list)
 
 
+@dp.message_handler(content_types=['text'], state=[BotStates.cp_menu])
+async def trtbps_message(message: types.Message):
+    user = message.from_user
+
+    trtbps = int(message.text)
+
+    await bot.send_message(
+        chat_id=user.id,
+        text=f'Ваш тиск: {trtbps}'
+    )
+
+    await bot.send_message(
+        chat_id=user.id,
+        text=f'Напишіть ваш рівень холестерину'
+    )
+
+    data_list.append(trtbps)
+    print(data_list)
 
 
-#@dp.message_handler(content_types=['text'], state=[BotStates.])
+@dp.message_handler(content_types=['text'], state=[BotStates.cp_menu])
+async def chol_message(message: types.Message):
+    user = message.from_user
+
+    chol = int(message.text)
+
+    await bot.send_message(
+        chat_id=user.id,
+        text=f'Ваш рівень холестерину: {chol}'
+    )
+
+
+
+    data_list.append(chol)
+    print(data_list)
 
 @dp.message_handler(Text("Прочитати інструкцію"))
 async def instruction_reply(message: types.Message):
