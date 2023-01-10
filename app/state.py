@@ -16,3 +16,4 @@ class BotStates(StatesGroup):
     slp_menu = State()
     caa_menu = State()
     thall_menu = State()
+    result = State()

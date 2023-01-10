@@ -46,4 +46,4 @@ class Model:
 
 if __name__ == '__main__':
     model = Model()
-    print(model.predict([[21, 1, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]]))
+    print(model.predict_proba([[21, 1, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]]))
