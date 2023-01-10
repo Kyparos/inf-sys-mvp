@@ -2,7 +2,7 @@ from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters import Text, Command
 
-#from state import BotStates
+from state import BotStates
 from config import TOKEN
 from keyboards import Keyboards
 
@@ -12,7 +12,7 @@ bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=storage)
 
 
-@dp.message_handler(commands=['start'])
+@dp.message_handler(commands=['start'], state=[None])
 async def start(message: types.Message):
     user = message.from_user
 
@@ -27,7 +27,93 @@ async def start(message: types.Message):
         reply_markup=Keyboards.MainMenu
     )
 
+    await BotStates.main_menu.set()
 
+
+@dp.message_handler(Text("Надіслати дані"), state=[BotStates.main_menu])
+async def interest_reply(message: types.Message):
+    user = message.from_user
+
+    await bot.send_message(
+        chat_id=user.id,
+        text='Надішліть свій вік',
+        reply_markup=Keyboards.HideMenu
+    )
+
+
+@dp.message_handler(content_types=['text'], state=[BotStates.main_menu])
+async def age_message(message: types.Message):
+    user = message.from_user
+
+    age = int(message.text)
+
+    await bot.send_message(
+        chat_id=user.id,
+        text=f'Ваш вік {age}, а тепер надішліть пудласка стать',
+    )
+
+    await bot.send_message(
+        chat_id=user.id,
+        text=f'Оберіть вашу стать\n'
+             f'0 - Чоловіча\n'
+             f'1 - Жіноча',
+        reply_markup=Keyboards.GenderMenu
+    )
+    data_list.append(age)
+    print(data_list)
+
+    await BotStates.gender_menu.set()
+
+
+@dp.message_handler(content_types=['text'], state=BotStates.gender_menu)
+async def gender_message(message: types.Message):
+    user = message.from_user
+
+    gender = int(message.text)
+
+    await bot.send_message(
+        chat_id=user.id,
+        text=f'Ваша стать: {gender}'
+    )
+
+    await bot.send_message(
+        chat_id=user.id,
+        text='Опишіть свій біль',
+        reply_markup=Keyboards.CpMenu
+    )
+
+    data_list.append(gender)
+    print(data_list)
+
+    await BotStates.cp_menu.set()
+
+
+@dp.message_handler(content_types=['text'], state=BotStates.cp_menu)
+async def cp_message(message: types.Message):
+    user = message.from_user
+
+    cp = int(message.text)
+
+    await bot.send_message(
+        chat_id=user.id,
+        text=f'У вас {cp} вид болю'
+    )
+
+    data_list.append(cp)
+    print(data_list)
+
+
+
+
+#@dp.message_handler(content_types=['text'], state=[BotStates.])
+
+@dp.message_handler(Text("Прочитати інструкцію"))
+async def instruction_reply(message: types.Message):
+    await message.reply("*інструкція*")
+
+
+data_list = []
+final_list = [data_list]
 
 if __name__ == '__main__':
     executor.start_polling(dp)
