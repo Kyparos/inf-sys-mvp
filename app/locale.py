@@ -14,19 +14,30 @@ class CpMenu:
     PAIN3 = '3'
     PAIN4 = '4'
 
+
 class FbsMenu:
     MORE120 = '1'
     LESS120 = '0'
 
+
 class TrtbpsMenu:
     DONTKNOW = '-1'
+
 
 class CholMenu:
     DONTKNOW = '-1'
 
-class
+
+class RestecgMenu:
+    RESULT0 = '0'
+    RESULT1 = '1'
+    RESULT2 = '2'
+    DONTKNOW = '-1'
 
 
-#class HideMenu:
+class ThalachhMenu:
+    DONTKNOW = '-1'
+
+# class HideMenu:
 #    HIDE_KEYBOARD = ''
 ## class DataMenu:

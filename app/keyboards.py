@@ -49,12 +49,18 @@ class Keyboards:
         ]
     )
 
-    Restecg = ReplyKeyboardMarkup(
+    RestecgMenu = ReplyKeyboardMarkup(
         [
-            [KeyboardButton(locale.]
-            [KeyboardButton(locale.]
-            [KeyboardButton(locale.]
+            [KeyboardButton(locale.RestecgMenu.RESULT0)],
+            [KeyboardButton(locale.RestecgMenu.RESULT1)],
+            [KeyboardButton(locale.RestecgMenu.RESULT2)],
+            [KeyboardButton(locale.RestecgMenu.DONTKNOW)]
+        ]
+    )
 
+    ThalachhMenu = ReplyKeyboardMarkup(
+        [
+            [KeyboardButton(locale.ThalachhMenu.DONTKNOW)]
         ]
     )
 

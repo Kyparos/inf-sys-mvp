@@ -9,3 +9,5 @@ class BotStates(StatesGroup):
     chol_menu = State()
     #hide_menu = State()
     fbs_menu = State()
+    restecg_menu = State()
+    thalachh = State()

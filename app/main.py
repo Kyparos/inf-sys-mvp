@@ -171,7 +171,6 @@ async def fbs_message(message: types.Message):
     await bot.send_message(
         chat_id=user.id,
         text=f'Ваша відповідь: {fbs}',
-        reply_markup=Keyboards.FbsMenu
     )
 
     await bot.send_message(
@@ -179,11 +178,61 @@ async def fbs_message(message: types.Message):
         text='Оберіть ваш тип кардіограми:\n'
              '0 - \n'
              '1 - \n'
-             '2 - '
+             '2 - \n'
+             '-1 - ',
+        reply_markup=Keyboards.RestecgMenu
     )
 
     data_list.append(fbs)
     print(data_list)
+
+    await BotStates.restecg_menu.set()
+
+
+@dp.message_handler(content_types=['text'], state=[BotStates.restecg_menu])
+async def fbs_message(message: types.Message):
+    user = message.from_user
+
+    restecg = int(message.text)
+
+    await bot.send_message(
+        chat_id=user.id,
+        text=f'Ваша відповідь: {restecg}',
+    )
+
+    await bot.send_message(
+        chat_id=user.id,
+        text='Напишіть ваш пульс',
+        reply_markup=Keyboards.ThalachhMenu
+    )
+
+    data_list.append(restecg)
+    print(data_list)
+
+    await BotStates.fbs_menu.set()
+
+
+@dp.message_handler(content_types=['text'], state=[BotStates.restecg_menu])
+async def fbs_message(message: types.Message):
+    user = message.from_user
+
+    restecg = int(message.text)
+
+    await bot.send_message(
+        chat_id=user.id,
+        text=f'Ваша відповідь: {restecg}',
+    )
+
+    await bot.send_message(
+        chat_id=user.id,
+        text='Напишіть ваш пульс',
+        reply_markup=Keyboards.ThalachhMenu
+    )
+
+    data_list.append(restecg)
+    print(data_list)
+
+    await BotStates.fbs_menu.set()
 
 
 @dp.message_handler(Text("Прочитати інструкцію"))
