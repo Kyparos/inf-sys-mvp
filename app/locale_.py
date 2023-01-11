@@ -1,80 +1,56 @@
-class MainMenu:
-    INSTRUCTION = 'Прочитати інструкцію'
-    REQUEST_DATA = 'Надіслати дані'
+DONT_KNOW = 'Не знаю'
 
+gender_menu = {'Жіноча': 1,
+               'Чоловіча': 0}
 
-class GenderMenu:
-    MALE = '0'
-    FEMALE = '1'
+cp_menu = {'0': 0,
+           '1': 1,
+           '2': 2,
+           '3': 3}
 
+trtbps_menu = {DONT_KNOW: -1}
 
-class CpMenu:
-    PAIN1 = '1'
-    PAIN2 = '2'
-    PAIN3 = '3'
-    PAIN0 = '0'
+chol_menu = {DONT_KNOW: -1}
 
+fbs_menu = {DONT_KNOW: -1,
+            'меньший за 120мг/дл': 0,
+            'більший за 120мг/дл': 1}
 
+restecg_menu = {DONT_KNOW: -1,
+                'нормальний': 0,
+                'наявність аномалії зубця ST-T': 1,
+                'гіпертрофія': 2}
 
+exng_menu = {DONT_KNOW: -1,
+             'Так': 1,
+             'Ні': 0}
 
-class TrtbpsMenu:
-    DONTKNOW = '-1'
+thalachh_menu = {DONT_KNOW: 1}
 
+old_peak_menu = {DONT_KNOW: -1}
 
-class CholMenu:
-    DONTKNOW = '-1'
+caa_menu = {DONT_KNOW: -1,
+            '0': 0,
+            '1': 1,
+            '2': 2,
+            '3+': 3}
 
-class FbsMenu:
-    MORE120 = '1'
-    LESS120 = '0'
-    DONTKNOW = '-1'
+slp_menu = {DONT_KNOW: -1,
+            'спадний': 0,
+            'плоский': 1,
+            'висхідний': 2}
 
+main_menu = {'Надіслати дані': 'Надіслати дані',
+             # 'Прочитати інструкцію': 'Прочитати інструкцію',
+             }
 
+thall_menu = {DONT_KNOW: -1,
+              'немаю': 0,
+              'фіксований дефект': 1,
+              'нормальний кровотік': 2,
+              'оборотний дефект ': 3}
 
-class RestecgMenu:
-    RESULT0 = '0'
-    RESULT1 = '1'
-    RESULT2 = '2'
-    DONTKNOW = '-1'
-
-
-class ThalachhMenu:
-    DONTKNOW = '-1'
-
-
-class ExngMenu:
-    RESULT0 = '0'
-    RESULT1 = '1'
-    DONTKNOW = '-1'
-
-
-class OldpeakMenu:
-    DONTKNOW = '-1'
-
-
-class SlpMenu:
-    RESULT0 = '0'
-    RESULT1 = '1'
-    RESULT2 = '2'
-    DONTKNOW = '-1'
-
-
-class CaaMenu:
-    RESULT0 = '0'
-    RESULT1 = '1'
-    RESULT2 = '2'
-    RESULT3 = '3'
-    DONTKNOW = '-1'
-
-
-class ThallMenu:
-    RESULT1 = '1'
-    RESULT2 = '2'
-    RESULT3 = '3'
-    DONTKNOW = '-1'
-
-
-
+# {'DONTKNOW': '-1', 'RESULT0': '0', 'RESULT1': '1'}
 
 # class HideMenu:
 #    HIDE_KEYBOARD = ''
