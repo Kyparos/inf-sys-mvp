@@ -3,115 +3,38 @@ from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 import locale_
 
 
+def create_menu(variants_dict):
+    return ReplyKeyboardMarkup([[KeyboardButton(k) for k in variants_dict.keys()]], resize_keyboard=True)
+
 class Keyboards:
-    MainMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale_.MainMenu.INSTRUCTION)],
-            [KeyboardButton(locale_.MainMenu.REQUEST_DATA)]
-        ],
-        resize_keyboard=True
-    )
-
-    GenderMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale_.GenderMenu.MALE)],
-            [KeyboardButton(locale_.GenderMenu.FEMALE)]
-        ],
-        resize_keyboard=True
-    )
-
-    CpMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale_.CpMenu.PAIN1)],
-            [KeyboardButton(locale_.CpMenu.PAIN2)],
-            [KeyboardButton(locale_.CpMenu.PAIN3)],
-            [KeyboardButton(locale_.CpMenu.PAIN0)]
-        ],
-        resize_keyboard=True
-    )
-
-    TrtbpsMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale_.TrtbpsMenu.DONTKNOW)]
-        ]
-    )
-
-    CholMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale_.CholMenu.DONTKNOW)]
-        ]
-    )
 
 
-    FbsMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale_.FbsMenu.MORE120)],
-            [KeyboardButton(locale_.FbsMenu.LESS120)],
-            [KeyboardButton(locale_.FbsMenu.DONTKNOW)]
-        ]
-    )
+    MainMenu = create_menu(locale_.main_menu)
+
+    GenderMenu = create_menu(locale_.gender_menu)
+
+    CpMenu = create_menu(locale_.cp_menu)
+
+    TrtbpsMenu = create_menu(locale_.trtbps_menu)
+
+    CholMenu = create_menu(locale_.chol_menu)
 
 
-    RestecgMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale_.RestecgMenu.RESULT0)],
-            [KeyboardButton(locale_.RestecgMenu.RESULT1)],
-            [KeyboardButton(locale_.RestecgMenu.RESULT2)],
-            [KeyboardButton(locale_.RestecgMenu.DONTKNOW)]
-        ]
-    )
+    FbsMenu = create_menu(locale_.fbs_menu)
 
-    ThalachhMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale_.ThalachhMenu.DONTKNOW)]
-        ]
-    )
 
-    ExngMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale_.ExngMenu.RESULT0)],
-            [KeyboardButton(locale_.ExngMenu.RESULT1)],
-            [KeyboardButton(locale_.ExngMenu.DONTKNOW)]
+    RestecgMenu = create_menu(locale_.restecg_menu)
 
-        ]
-    )
+    ThalachhMenu = create_menu(locale_.thalachh_menu)
 
-    OldpeakMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale_.OldpeakMenu.DONTKNOW)]
-        ]
-    )
+    ExngMenu = create_menu(locale_.exng_menu)
 
-    SlpMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale_.SlpMenu.RESULT0)],
-            [KeyboardButton(locale_.SlpMenu.RESULT1)],
-            [KeyboardButton(locale_.SlpMenu.RESULT2)],
-            [KeyboardButton(locale_.SlpMenu.DONTKNOW)]
-        ]
-    )
+    OldpeakMenu = create_menu(locale_.old_peak_menu)
 
-    CaaMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale_.CaaMenu.RESULT0)],
-            [KeyboardButton(locale_.CaaMenu.RESULT1)],
-            [KeyboardButton(locale_.CaaMenu.RESULT2)],
-            [KeyboardButton(locale_.CaaMenu.RESULT3)],
-            [KeyboardButton(locale_.CaaMenu.DONTKNOW)]
+    SlpMenu = create_menu(locale_.slp_menu)
+    CaaMenu = create_menu(locale_.caa_menu)
 
-        ]
-    )
-
-    ThallMenu = ReplyKeyboardMarkup(
-        [
-            [KeyboardButton(locale_.ThallMenu.RESULT1)],
-            [KeyboardButton(locale_.ThallMenu.RESULT2)],
-            [KeyboardButton(locale_.ThallMenu.RESULT3)],
-            [KeyboardButton(locale_.ThallMenu.DONTKNOW)]
-
-        ]
-    )
-
+    ThallMenu = create_menu(locale_.thall_menu)
 
     #HideMenu = ReplyKeyboardMarkup(
     #    [

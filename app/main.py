@@ -8,6 +8,11 @@ from database import DataBase
 from state import BotStates
 from config import TOKEN
 from keyboards import Keyboards
+import locale_
+
+def message_decode(val, dict_):
+    return dict_.get(val, -1)
+
 
 storage = MemoryStorage()
 
@@ -56,14 +61,12 @@ async def age_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text=f'Ваш вік {age}, а тепер надішліть пудласка стать',
+        text=f'Ваш вік {age}, а тепер надішліть будласка стать',
     )
 
     await bot.send_message(
         chat_id=user.id,
-        text=f'Оберіть вашу стать\n'
-             f'0 - Чоловіча\n'
-             f'1 - Жіноча',
+        text=f'Оберіть вашу стать',
         reply_markup=Keyboards.GenderMenu
     )
     data_list.append(age)
@@ -76,7 +79,7 @@ async def age_message(message: types.Message):
 async def gender_message(message: types.Message):
     user = message.from_user
 
-    gender = int(message.text)
+    gender = message.text
 
     await bot.send_message(
         chat_id=user.id,
@@ -85,11 +88,11 @@ async def gender_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text='Опишіть свій біль',
+        text='Оценіть свій біль в груди від 0 до 3',
         reply_markup=Keyboards.CpMenu
     )
 
-    data_list.append(gender)
+    data_list.append(message_decode(gender, locale_.gender_menu))
     print(data_list)
 
     await BotStates.cp_menu.set()
@@ -99,11 +102,11 @@ async def gender_message(message: types.Message):
 async def cp_message(message: types.Message):
     user = message.from_user
 
-    cp = int(message.text)
+    cp = message.text
 
     await bot.send_message(
         chat_id=user.id,
-        text=f'У вас {cp} вид болю'
+        text=f'У вас {cp}-й рівень болю'
     )
 
     await bot.send_message(
@@ -114,7 +117,7 @@ async def cp_message(message: types.Message):
 
     await BotStates.trtbps_menu.set()
 
-    data_list.append(cp)
+    data_list.append(message_decode(cp, locale_.cp_menu))
     print(data_list)
 
 
@@ -122,7 +125,7 @@ async def cp_message(message: types.Message):
 async def trtbps_message(message: types.Message):
     user = message.from_user
 
-    trtbps = int(message.text)
+    trtbps = message.text
 
     await bot.send_message(
         chat_id=user.id,
@@ -136,7 +139,7 @@ async def trtbps_message(message: types.Message):
     )
 
     await BotStates.chol_menu.set()
-
+    trtbps = int(trtbps) if trtbps != locale_.DONT_KNOW else -1
     data_list.append(trtbps)
     print(data_list)
 
@@ -145,7 +148,7 @@ async def trtbps_message(message: types.Message):
 async def chol_message(message: types.Message):
     user = message.from_user
 
-    chol = int(message.text)
+    chol = message.text
 
     await bot.send_message(
         chat_id=user.id,
@@ -154,13 +157,10 @@ async def chol_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text='Чи ваш рівень цукру більший за 120?\n'
-             '0 - Сахар меньший за 120мг/дл\n'
-             '1 - Сахар більший за 120мг/дл\n'
-             '-1 - Не знаю',
+        text='Ваш рівень цукру ...',
         reply_markup=Keyboards.FbsMenu
     )
-
+    chol = int(chol) if chol != locale_.DONT_KNOW else -1
     data_list.append(chol)
     print(data_list)
 
@@ -171,7 +171,7 @@ async def chol_message(message: types.Message):
 async def fbs_message(message: types.Message):
     user = message.from_user
 
-    fbs = int(message.text)
+    fbs = message.text
 
     await bot.send_message(
         chat_id=user.id,
@@ -180,15 +180,11 @@ async def fbs_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text='Оберіть ваш тип кардіограми:\n'
-             'Значення 0: нормально\n'
-             'Значення 1: наявність аномалії зубця ST-T (інверсії зубця T і/або елевація або депресія ST > 0,05 мВ)\n'
-             'Значення 2: демонструє ймовірну або певну гіпертрофію лівого шлуночка за критеріями Естеса\n'
-             'Значення -1: Не знаю',
+        text='Оберіть ваш тип кардіограми',
         reply_markup=Keyboards.RestecgMenu
     )
 
-    data_list.append(fbs)
+    data_list.append(message_decode(fbs, locale_.fbs_menu))
     print(data_list)
 
     await BotStates.restecg_menu.set()
@@ -198,7 +194,7 @@ async def fbs_message(message: types.Message):
 async def restecg_message(message: types.Message):
     user = message.from_user
 
-    restecg = int(message.text)
+    restecg = message.text
 
     await bot.send_message(
         chat_id=user.id,
@@ -211,7 +207,7 @@ async def restecg_message(message: types.Message):
         reply_markup=Keyboards.ThalachhMenu
     )
 
-    data_list.append(restecg)
+    data_list.append(message_decode(restecg, locale_.restecg_menu))
     print(data_list)
 
     await BotStates.thalachh_menu.set()
@@ -221,7 +217,7 @@ async def restecg_message(message: types.Message):
 async def thalachh_message(message: types.Message):
     user = message.from_user
 
-    thalahh = int(message.text)
+    thalahh = message.text
 
     await bot.send_message(
         chat_id=user.id,
@@ -233,6 +229,7 @@ async def thalachh_message(message: types.Message):
         text='Чи є в вас стенокардія фізичного навантаження',
         reply_markup=Keyboards.ExngMenu
     )
+    thalahh = int(thalahh) if thalahh != locale_.DONT_KNOW else -1
     data_list.append(thalahh)
     print(data_list)
 
@@ -243,7 +240,7 @@ async def thalachh_message(message: types.Message):
 async def exng_message(message: types.Message):
     user = message.from_user
 
-    exng = int(message.text)
+    exng = message.text
 
     await bot.send_message(
         chat_id=user.id,
@@ -258,7 +255,7 @@ async def exng_message(message: types.Message):
         reply_markup=Keyboards.OldpeakMenu
     )
 
-    data_list.append(exng)
+    data_list.append(message_decode(exng, locale_.exng_menu))
     print(data_list)
 
     await BotStates.oldpeak_menu.set()
@@ -268,7 +265,7 @@ async def exng_message(message: types.Message):
 async def oldpeak_message(message: types.Message):
     user = message.from_user
 
-    oldpeak = float(message.text)
+    oldpeak = message.text
 
     await bot.send_message(
         chat_id=user.id,
@@ -277,11 +274,10 @@ async def oldpeak_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text='нахил піку навантаження сегмент ST — 0: спадний;\n'
-             ' 1: плоский; 2: висхідний ',
+        text='КількістЬ звуженних головних артерій',
         reply_markup=Keyboards.SlpMenu
     )
-
+    oldpeak = float(oldpeak) if oldpeak != locale_.DONT_KNOW else -1
     data_list.append(oldpeak)
     print(data_list)
 
@@ -292,7 +288,7 @@ async def oldpeak_message(message: types.Message):
 async def caa_message(message: types.Message):
     user = message.from_user
 
-    caa = int(message.text)
+    caa = message.text
 
     await bot.send_message(
         chat_id=user.id,
@@ -301,12 +297,11 @@ async def caa_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text='number of major vessels\n'
-             '0: , 1: , 2: , 3: .',
-        reply_markup=Keyboards.SlpMenu
+        text='нахил піку навантаження сегмент ST',
+        reply_markup=Keyboards.CaaMenu
     )
 
-    data_list.append(caa)
+    data_list.append(message_decode(caa, locale_.caa_menu))
     print(data_list)
 
     await BotStates.slp_menu.set()
@@ -316,7 +311,7 @@ async def caa_message(message: types.Message):
 async def slp_message(message: types.Message):
     user = message.from_user
 
-    slp = int(message.text)
+    slp = message.text
 
     await bot.send_message(
         chat_id=user.id,
@@ -325,14 +320,11 @@ async def slp_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text='Захворювання крові під назвою таласемія. Значення 0: НУЛЬ (вилучено з набору даних раніше\n'
-             'Значення 1: фіксований дефект (відсутність кровотоку в деякій частині серця)\n'
-             'Значення 2: нормальний кровотік'
-             'Значення 3: оборотний дефект (потік крові спостерігається, але він не є нормальним)',
+        text='Захворювання крові під назвою таласемія',
         reply_markup=Keyboards.ThallMenu
     )
 
-    data_list.append(slp)
+    data_list.append(message_decode(slp, locale_.slp_menu))
     print(data_list)
 
     await BotStates.thall_menu.set()
@@ -341,20 +333,20 @@ async def slp_message(message: types.Message):
 @dp.message_handler(content_types=['text'], state=[BotStates.thall_menu])
 async def thall_message(message: types.Message):
     user = message.from_user
-    thall = int(message.text)
+    thall = message.text
     await bot.send_message(
         chat_id=user.id,
         text=f'Ваша відповідь: {thall}',
     )
 
-    data_list.append(thall)
+    data_list.append(message_decode(thall, locale_.thall_menu))
     print(data_list)
 
     print('HI')
     res = model.predict_proba([data_list])[0][1]
     await bot.send_message(
         chat_id=user.id,
-        text=f'Ваша ризик: {res}\n'
+        text=f'Ваша ризик: {res:.2%}\n'
              f'Відповідь може бути не точна якщо ви надали не достатьньо данних',
         reply_markup=Keyboards.MainMenu
     )
@@ -369,7 +361,7 @@ async def result(message: types.Message):
     res = model.predict_proba([data_list])[0][1]
     await bot.send_message(
         chat_id=user.id,
-        text=f'Ваша ризик: {res}\n'
+        text=f'Ваша ризик: {res:.2%}\n'
              f'Відповідь може бути не точна якщо ви надали не достатьньо данних',
     )
 
