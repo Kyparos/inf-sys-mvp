@@ -10,6 +10,7 @@ from config import TOKEN
 from keyboards import Keyboards
 import locale_
 
+
 def message_decode(val, dict_):
     return dict_.get(val, -1)
 
@@ -88,7 +89,7 @@ async def gender_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text='Оценіть свій біль в груди від 0 до 3',
+        text='Оценіть свій біль в грудях від 0 до 3',
         reply_markup=Keyboards.CpMenu
     )
 
@@ -226,7 +227,7 @@ async def thalachh_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text='Чи є в вас стенокардія фізичного навантаження',
+        text='Чи є у вас стенокардія фізичного навантаження',
         reply_markup=Keyboards.ExngMenu
     )
     thalahh = int(thalahh) if thalahh != locale_.DONT_KNOW else -1
@@ -274,7 +275,7 @@ async def oldpeak_message(message: types.Message):
 
     await bot.send_message(
         chat_id=user.id,
-        text='КількістЬ звуженних головних артерій',
+        text='Кількість звужених головних артерій',
         reply_markup=Keyboards.SlpMenu
     )
     oldpeak = float(oldpeak) if oldpeak != locale_.DONT_KNOW else -1
@@ -282,29 +283,6 @@ async def oldpeak_message(message: types.Message):
     print(data_list)
 
     await BotStates.caa_menu.set()
-
-
-@dp.message_handler(content_types=['text'], state=[BotStates.caa_menu])
-async def caa_message(message: types.Message):
-    user = message.from_user
-
-    caa = message.text
-
-    await bot.send_message(
-        chat_id=user.id,
-        text=f'Ваша відповідь: {caa}',
-    )
-
-    await bot.send_message(
-        chat_id=user.id,
-        text='нахил піку навантаження сегмент ST',
-        reply_markup=Keyboards.CaaMenu
-    )
-
-    data_list.append(message_decode(caa, locale_.caa_menu))
-    print(data_list)
-
-    await BotStates.slp_menu.set()
 
 
 @dp.message_handler(content_types=['text'], state=[BotStates.slp_menu])
@@ -327,6 +305,29 @@ async def slp_message(message: types.Message):
     data_list.append(message_decode(slp, locale_.slp_menu))
     print(data_list)
 
+    await BotStates.caa_menu.set()
+
+
+@dp.message_handler(content_types=['text'], state=[BotStates.caa_menu])
+async def caa_message(message: types.Message):
+    user = message.from_user
+
+    caa = message.text
+
+    await bot.send_message(
+        chat_id=user.id,
+        text=f'Ваша відповідь: {caa}',
+    )
+
+    await bot.send_message(
+        chat_id=user.id,
+        text='Нахил піку навантаження сегмент ST',
+        reply_markup=Keyboards.CaaMenu
+    )
+
+    data_list.append(message_decode(caa, locale_.caa_menu))
+    print(data_list)
+
     await BotStates.thall_menu.set()
 
 
@@ -346,8 +347,8 @@ async def thall_message(message: types.Message):
     res = model.predict_proba([data_list])[0][1]
     await bot.send_message(
         chat_id=user.id,
-        text=f'Ваша ризик: {res:.2%}\n'
-             f'Відповідь може бути не точна якщо ви надали не достатьньо данних',
+        text=f'Ваш ризик: {res:.2%}\n'
+             f'Відповідь може бути не точна якщо ви надали недостатьньо даних',
         reply_markup=Keyboards.MainMenu
     )
 
@@ -361,8 +362,8 @@ async def result(message: types.Message):
     res = model.predict_proba([data_list])[0][1]
     await bot.send_message(
         chat_id=user.id,
-        text=f'Ваша ризик: {res:.2%}\n'
-             f'Відповідь може бути не точна якщо ви надали не достатьньо данних',
+        text=f'Ваш ризик: {res:.2%}\n'
+             f'Відповідь може бути не точна, якщо ви надали недостатьньо данних',
     )
 
     await bot.send_message(
@@ -372,7 +373,6 @@ async def result(message: types.Message):
     )
     print(res)
     await BotStates.main_menu.set()
-
 
 
 @dp.message_handler(Text("Прочитати інструкцію"))
