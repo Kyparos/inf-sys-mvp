@@ -364,7 +364,7 @@ async def result(message: types.Message):
         text=f'Ваша ризик: {res:.2%}\n'
              f'Відповідь може бути не точна якщо ви надали не достатьньо данних',
     )
-
+    data_list = []
     await bot.send_message(
         chat_id=user.id,
         text='Бажаєте щось ще?',
