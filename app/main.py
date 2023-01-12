@@ -282,7 +282,7 @@ async def oldpeak_message(message: types.Message):
     data_list.append(oldpeak)
     print(data_list)
 
-    await BotStates.caa_menu.set()
+    await BotStates.slp_menu.set()
 
 
 @dp.message_handler(content_types=['text'], state=[BotStates.slp_menu])
@@ -299,7 +299,7 @@ async def slp_message(message: types.Message):
     await bot.send_message(
         chat_id=user.id,
         text='Захворювання крові під назвою таласемія',
-        reply_markup=Keyboards.ThallMenu
+        reply_markup=Keyboards.CaaMenu
     )
 
     data_list.append(message_decode(slp, locale_.slp_menu))
@@ -322,7 +322,7 @@ async def caa_message(message: types.Message):
     await bot.send_message(
         chat_id=user.id,
         text='Нахил піку навантаження сегмент ST',
-        reply_markup=Keyboards.CaaMenu
+        reply_markup=Keyboards.ThallMenu
     )
 
     data_list.append(message_decode(caa, locale_.caa_menu))
@@ -341,17 +341,20 @@ async def thall_message(message: types.Message):
     )
 
     data_list.append(message_decode(thall, locale_.thall_menu))
-    print(data_list)
-
-    print('HI')
     res = model.predict_proba([data_list])[0][1]
     await bot.send_message(
         chat_id=user.id,
         text=f'Ваш ризик: {res:.2%}\n'
-             f'Відповідь може бути не точна якщо ви надали недостатьньо даних',
-        reply_markup=Keyboards.MainMenu
+             f'Відповідь може бути не точна, якщо ви надали недостатьньо данних',
     )
 
+    await bot.send_message(
+        chat_id=user.id,
+        text='Бажаєте щось ще?',
+        reply_markup=Keyboards.MainMenu
+    )
+    print(data_list)
+    data_list[:] = []
     await BotStates.main_menu.set()
 
 
@@ -359,18 +362,8 @@ async def thall_message(message: types.Message):
 async def result(message: types.Message):
     user = message.from_user
     print('HI')
-    res = model.predict_proba([data_list])[0][1]
-    await bot.send_message(
-        chat_id=user.id,
-        text=f'Ваш ризик: {res:.2%}\n'
-             f'Відповідь може бути не точна, якщо ви надали недостатьньо данних',
-    )
-    data_list = []
-    await bot.send_message(
-        chat_id=user.id,
-        text='Бажаєте щось ще?',
-        reply_markup=Keyboards.MainMenu
-    )
+
+
     print(res)
     await BotStates.main_menu.set()
 
